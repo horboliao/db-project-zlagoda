@@ -135,6 +135,13 @@ func (s *checkService) CreateCheckItem(checkItem *entity.CheckItem) (CreateOrUpd
 	}
 
 	check.TotalPrice += checkItem.ProductPrice * float64(checkItem.ProductCount)
+	if check.CustomerCardID != nil {
+		customer, err := s.storages.CustomerCard.Get(*check.CustomerCardID)
+		if err != nil {
+			s.logger.Errorf("error getting customer: %#v", err)
+		}
+		check.TotalPrice -= check.TotalPrice * float64(customer.Discount) * 0.01
+	}
 	check.VAT = check.TotalPrice * 0.2
 
 	_, err = s.storages.Check.UpdateCheck(check.ID, check)

@@ -1,19 +1,25 @@
 import React, {useState} from 'react';
 import logoPicture from '../../../assets/images/logo-small.png'
 import profile from '../../../assets/images/profile.png'
+import logout from '../../../assets/images/logout.png'
 import ProfilePopup from "../../popups/ProfilePopup";
 import Modal from "../Modal/Modal";
+import {useNavigate} from "react-router-dom";
 
 const Navbar = () => {
     const employee = JSON.parse(localStorage.getItem('employee'));
     const isManager = employee.role!=='Касир';
     const [modal, setModal] = useState(false);
-
+    const navigate = useNavigate();
+    function logOut() {
+        localStorage.setItem('authToken', undefined);
+        navigate('/');
+    }
     return (
         <nav className="navigation-menu">
             <div className="nav-left">
             <div className="logo">
-                <img src={logoPicture} width="150px" height="24px"/>
+                <img src={logoPicture} width="150px" height="24px" alt={'logo'}/>
             </div>
             <ul className="menu-list">
                 {isManager
@@ -40,6 +46,7 @@ const Navbar = () => {
                 }
             </ul>
             </div>
+            <div style={{display:'flex',flexDirection:'row'}}>
             {!isManager
                 ?
                 <div>
@@ -52,6 +59,10 @@ const Navbar = () => {
                 </div>
             :
             null}
+                <button id="popup-btn" onClick={logOut} style={{marginLeft: '10px'}}>
+                    <img src={logout} alt="Logout"/>
+                </button>
+            </div>
         </nav>
 
     );
