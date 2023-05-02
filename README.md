@@ -4,8 +4,8 @@ project for university
 Website for supermarket Zlagoda. Developed for managers and cashiers. 
 
 Technologies:
-• Gin, go
-• React, js
+- Gin, go
+- React, js
 
 You can:
 • add/delete/create employees/customers/products/categories/products in store 
